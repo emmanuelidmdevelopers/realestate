@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prestige Properties — Nigerian Real Estate</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1a4b8c;
+    --blue-light: #2563c7;
+    --blue-pale: #eef4ff;
+    --white: #ffffff;
+    --off-white: #f8f9fc;
+    --dark: #0f1c2e;
+    --grey: #64748b;
+    --border: #e2e8f0;
+    --gold: #c9a84c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    height: 72px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--blue);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    background: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 16px;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 14px; color: var(--grey);
+    text-decoration: none; transition: color 0.2s;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-cta {
+    background: var(--blue); color: white;
+    padding: 10px 24px; font-size: 13px;
+    font-weight: 500; text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--blue-light); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--dark) 0%, #1a3a6e 60%, #1e4d8c 100%);
+    display: flex; align-items: center;
+    padding: 120px 48px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 680px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 16px; margin-bottom: 32px;
+    font-size: 12px; letter-spacing: 2px;
+    color: rgba(255,255,255,0.8); text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-badge-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 76px);
+    font-weight: 700; color: white;
+    line-height: 1.1; margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title span { color: var(--gold); }
+  .hero-sub {
+    font-size: 16px; color: rgba(255,255,255,0.65);
+    line-height: 1.8; max-width: 500px; margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .btn-gold {
+    background: var(--gold); color: var(--dark);
+    padding: 16px 36px; font-weight: 600;
+    font-size: 14px; text-decoration: none;
+    transition: all 0.3s; letter-spacing: 0.5px;
+  }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.4); }
+  .btn-white-outline {
+    border: 1px solid rgba(255,255,255,0.4); color: white;
+    padding: 16px 36px; font-size: 14px;
+    text-decoration: none; background: transparent;
+    transition: all 0.3s;
+  }
+  .btn-white-outline:hover { border-color: white; transform: translateY(-2px); }
+
+  .hero-stats {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: white;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    opacity: 0; animation: fadeUp 0.8s 1s forwards;
+  }
+  .hero-stat {
+    padding: 28px 32px;
+    border-right: 1px solid var(--border);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 700; color: var(--blue);
+  }
+  .hero-stat-label { font-size: 13px; color: var(--grey); margin-top: 4px; }
+
+  /* SEARCH BAR */
+  .search-section {
+    background: var(--off-white); padding: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .search-bar {
+    display: flex; gap: 0;
+    max-width: 900px; margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+  .search-select {
+    padding: 18px 24px; border: none;
+    background: white; color: var(--dark);
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    border-right: 1px solid var(--border); cursor: pointer;
+    min-width: 160px; appearance: none;
+  }
+  .search-input {
+    flex: 1; padding: 18px 24px; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    color: var(--dark); outline: none;
+  }
+  .search-btn {
+    background: var(--blue); color: white;
+    padding: 18px 36px; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 600; cursor: pointer;
+    transition: background 0.2s; white-space: nowrap;
+  }
+  .search-btn:hover { background: var(--blue-light); }
+
+  /* PROPERTIES */
+  .properties { padding: 100px 48px; background: white; }
+  .section-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 48px;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    color: var(--blue); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 48px); font-weight: 700;
+    color: var(--dark); line-height: 1.2;
+  }
+  .view-all {
+    font-size: 14px; color: var(--blue);
+    text-decoration: none; font-weight: 500;
+    display: flex; align-items: center; gap: 6px;
+    transition: gap 0.2s;
+  }
+  .view-all:hover { gap: 10px; }
+
+  .properties-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+  }
+  .property-card {
+    background: white; border: 1px solid var(--border);
+    overflow: hidden; transition: all 0.3s;
+    text-decoration: none; color: var(--dark);
+    display: block;
+  }
+  .property-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(26,75,140,0.12);
+    border-color: var(--blue);
+  }
+  .property-img {
+    height: 220px; position: relative; overflow: hidden;
+  }
+  .property-img-inner {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1a3a6e, #2563c7);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px; opacity: 0.3;
+    transition: transform 0.5s;
+  }
+  .property-card:hover .property-img-inner { transform: scale(1.05); }
+  .property-badge {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--blue); color: white;
+    padding: 5px 12px; font-size: 11px;
+    font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .property-badge.sold { background: var(--grey); }
+  .property-badge.rent { background: #0891b2; }
+  .property-price {
+    position: absolute; bottom: 16px; right: 16px;
+    background: white; color: var(--blue);
+    padding: 6px 14px;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+  }
+  .property-body { padding: 24px; }
+  .property-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 600;
+    margin-bottom: 8px; color: var(--dark);
+  }
+  .property-location {
+    font-size: 13px; color: var(--grey);
+    display: flex; align-items: center; gap: 4px;
+    margin-bottom: 16px;
+  }
+  .property-features {
+    display: flex; gap: 16px;
+    padding-top: 16px; border-top: 1px solid var(--border);
+  }
+  .property-feature {
+    font-size: 13px; color: var(--grey);
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* WHY US */
+  .why-us {
+    padding: 100px 48px;
+    background: var(--blue);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center;
+  }
+  .why-left {}
+  .why-left .section-label { color: var(--gold); }
+  .why-left .section-title { color: white; margin-bottom: 24px; }
+  .why-left p { color: rgba(255,255,255,0.7); line-height: 1.8; font-size: 15px; }
+  .why-right { display: flex; flex-direction: column; gap: 4px; }
+  .why-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 28px 32px;
+    display: flex; gap: 20px; align-items: flex-start;
+    transition: all 0.3s;
+  }
+  .why-item:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateX(8px);
+  }
+  .why-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .why-text-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: white; margin-bottom: 6px;
+  }
+  .why-text-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 100px 48px; background: var(--off-white); }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 48px;
+  }
+  .testimonial-card {
+    background: white; padding: 36px;
+    border: 1px solid var(--border);
+    position: relative; transition: all 0.3s;
+  }
+  .testimonial-card:hover {
+    border-color: var(--blue);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(26,75,140,0.08);
+  }
+  .testimonial-quote {
+    font-size: 48px; color: var(--blue);
+    font-family: 'Playfair Display', serif;
+    line-height: 1; margin-bottom: 16px; opacity: 0.3;
+  }
+  .testimonial-text {
+    font-size: 14px; line-height: 1.8;
+    color: var(--grey); margin-bottom: 24px;
+    font-style: italic;
+  }
+  .testimonial-author {
+    display: flex; align-items: center; gap: 12px;
+    padding-top: 20px; border-top: 1px solid var(--border);
+  }
+  .testimonial-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--blue-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; color: var(--blue); font-weight: 700;
+  }
+  .testimonial-name {
+    font-weight: 600; font-size: 14px; color: var(--dark);
+  }
+  .testimonial-role { font-size: 12px; color: var(--grey); }
+  .stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+
+  /* CONTACT */
+  .contact {
+    padding: 100px 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    background: white;
+  }
+  .contact-left {}
+  .contact-left p {
+    font-size: 15px; color: var(--grey); line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .contact-items { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .contact-item-icon {
+    width: 44px; height: 44px; background: var(--blue-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .contact-item-label {
+    font-size: 11px; letter-spacing: 1px;
+    color: var(--blue); text-transform: uppercase;
+    font-family: 'Space Mono', monospace; margin-bottom: 4px;
+  }
+  .contact-item-value { font-size: 15px; color: var(--dark); font-weight: 500; }
+
+  .contact-right {
+    background: var(--off-white); padding: 48px;
+    border: 1px solid var(--border);
+  }
+  .contact-right h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; margin-bottom: 32px; color: var(--dark);
+  }
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    font-size: 12px; letter-spacing: 1px;
+    color: var(--grey); text-transform: uppercase;
+    font-family: 'Space Mono', monospace; margin-bottom: 8px;
+    display: block;
+  }
+  .form-input {
+    width: 100%; padding: 14px 18px;
+    border: 1px solid var(--border); background: white;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    color: var(--dark); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--blue); }
+  .form-select {
+    width: 100%; padding: 14px 18px;
+    border: 1px solid var(--border); background: white;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    color: var(--dark); outline: none; appearance: none;
+  }
+  .submit-btn {
+    width: 100%; background: var(--blue); color: white;
+    padding: 16px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 15px;
+    font-weight: 600; transition: all 0.3s; margin-top: 8px;
+  }
+  .submit-btn:hover { background: var(--blue-light); transform: translateY(-2px); }
+
+  .whatsapp-float {
+    position: fixed; bottom: 32px; right: 32px; z-index: 99;
+    background: #25D366; color: white;
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; text-decoration: none;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+    animation: pulse 2s infinite;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 8px 24px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 8px 40px rgba(37,211,102,0.7); }
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); padding: 60px 48px 32px;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px; padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: white; margin-bottom: 16px;
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+  .footer-col-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 2px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 14px; color: rgba(255,255,255,0.5);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: white; }
+  .footer-bottom {
+    display: flex; justify-content: space-between;
+    align-items: center; padding-top: 28px;
+  }
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); }
+  .footer-copy span { color: var(--gold); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 120px; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .search-section { padding: 32px 24px; }
+    .search-bar { flex-direction: column; }
+    .properties { padding: 60px 24px; }
+    .properties-grid { grid-template-columns: 1fr; }
+    .why-us { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    .testimonials { padding: 60px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .contact { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    footer { padding: 48px 24px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/2340000000000" class="whatsapp-float" title="Chat on WhatsApp">💬</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🏠</div>
+    Prestige<span style="color:var(--gold)">.</span>Properties
+  </div>
+  <ul class="nav-links">
+    <li><a href="#properties">Properties</a></li>
+    <li><a href="#why-us">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Get In Touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Nigeria's Trusted Property Experts
+    </div>
+    <h1 class="hero-title">
+      Find Your <span>Dream</span><br>Property in Nigeria
+    </h1>
+    <p class="hero-sub">
+      From luxury apartments in Lagos to prime land in Abuja — we connect serious buyers, sellers and investors with the best real estate opportunities across Nigeria.
+    </p>
+    <div class="hero-cta">
+      <a href="#properties" class="btn-gold">View Properties</a>
+      <a href="#contact" class="btn-white-outline">Book Consultation</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">500+</div>
+      <div class="hero-stat-label">Properties Listed</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">1,200+</div>
+      <div class="hero-stat-label">Happy Clients</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">8+</div>
+      <div class="hero-stat-label">Years Experience</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">15+</div>
+      <div class="hero-stat-label">Cities Covered</div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<section class="search-section">
+  <div class="search-bar">
+    <select class="search-select">
+      <option>For Sale</option>
+      <option>For Rent</option>
+      <option>Land</option>
+    </select>
+    <select class="search-select">
+      <option>All Locations</option>
+      <option>Lagos</option>
+      <option>Abuja</option>
+      <option>Port Harcourt</option>
+      <option>Ibadan</option>
+    </select>
+    <input class="search-input" type="text" placeholder="Search by property type, location...">
+    <button class="search-btn">🔍 Search Properties</button>
+  </div>
+</section>
+
+<!-- PROPERTIES -->
+<section class="properties" id="properties">
+  <div class="section-header">
+    <div>
+      <p class="section-label">// Featured Listings</p>
+      <h2 class="section-title">Latest Properties</h2>
+    </div>
+    <a href="#" class="view-all">View All Properties →</a>
+  </div>
+  <div class="properties-grid">
+    <a href="#" class="property-card">
+      <div class="property-img">
+        <div class="property-img-inner">🏢</div>
+        <div class="property-badge">For Sale</div>
+        <div class="property-price">₦45,000,000</div>
+      </div>
+      <div class="property-body">
+        <div class="property-title">Luxury 4-Bedroom Duplex</div>
+        <div class="property-location">📍 Lekki Phase 1, Lagos</div>
+        <div class="property-features">
+          <div class="property-feature">🛏 4 Beds</div>
+          <div class="property-feature">🚿 3 Baths</div>
+          <div class="property-feature">🚗 2 Parking</div>
+          <div class="property-feature">📐 320 sqm</div>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="property-card">
+      <div class="property-img">
+        <div class="property-img-inner" style="background: linear-gradient(135deg, #1e4d8c, #0891b2);">🏠</div>
+        <div class="property-badge rent">For Rent</div>
+        <div class="property-price">₦2,500,000/yr</div>
+      </div>
+      <div class="property-body">
+        <div class="property-title">Modern 3-Bedroom Flat</div>
+        <div class="property-location">📍 Maitama, Abuja</div>
+        <div class="property-features">
+          <div class="property-feature">🛏 3 Beds</div>
+          <div class="property-feature">🚿 2 Baths</div>
+          <div class="property-feature">🚗 1 Parking</div>
+          <div class="property-feature">📐 180 sqm</div>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="property-card">
+      <div class="property-img">
+        <div class="property-img-inner" style="background: linear-gradient(135deg, #0f3460, #1a4b8c);">🏗</div>
+        <div class="property-badge">For Sale</div>
+        <div class="property-price">₦12,000,000</div>
+      </div>
+      <div class="property-body">
+        <div class="property-title">Prime Land — 600 sqm</div>
+        <div class="property-location">📍 Gwarinpa, Abuja</div>
+        <div class="property-features">
+          <div class="property-feature">📐 600 sqm</div>
+          <div class="property-feature">📄 C of O</div>
+          <div class="property-feature">🔒 Gated Estate</div>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-us" id="why-us">
+  <div class="why-left">
+    <p class="section-label">// Why Choose Us</p>
+    <h2 class="section-title" style="color:white;">Nigeria's Most Trusted Property Agents</h2>
+    <p>We've helped over 1,200 Nigerians buy, sell and rent properties across the country. Our team combines deep local knowledge with modern technology to give you the best real estate experience possible.</p>
+  </div>
+  <div class="why-right">
+    <div class="why-item">
+      <div class="why-icon">✅</div>
+      <div>
+        <div class="why-text-title">Verified Listings Only</div>
+        <div class="why-text-desc">Every property is verified and inspected before listing. No scams, no fake properties.</div>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">⚡</div>
+      <div>
+        <div class="why-text-title">Fast & Easy Process</div>
+        <div class="why-text-desc">From search to keys in hand — we make the process smooth and stress-free.</div>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">🤝</div>
+      <div>
+        <div class="why-text-title">Dedicated Agent Support</div>
+        <div class="why-text-desc">Your personal agent guides you every step of the way, available 7 days a week.</div>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">📄</div>
+      <div>
+        <div class="why-text-title">Legal Documentation</div>
+        <div class="why-text-desc">Full C of O, Survey Plans and legal paperwork handled professionally.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div style="text-align:center; margin-bottom: 0;">
+    <p class="section-label" style="text-align:center;">// Client Reviews</p>
+    <h2 class="section-title" style="text-align:center;">What Our Clients Say</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">I found my dream home in Lekki within 2 weeks. The process was seamless and my agent was incredibly professional throughout.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">AO</div>
+        <div>
+          <div class="testimonial-name">Adaeze Okonkwo</div>
+          <div class="testimonial-role">Property Buyer, Lagos</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">Sold my Abuja property at the best market price. They handled everything including documentation. Highly recommended!</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">BM</div>
+        <div>
+          <div class="testimonial-name">Babatunde Musa</div>
+          <div class="testimonial-role">Property Seller, Abuja</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">As an investor I've worked with many agents. Prestige Properties stands out for their integrity and market knowledge.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">CI</div>
+        <div>
+          <div class="testimonial-name">Chidi Ikenna</div>
+          <div class="testimonial-role">Real Estate Investor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <p class="section-label">// Get In Touch</p>
+    <h2 class="section-title">Let's Find Your Perfect Property</h2>
+    <p>Whether you're buying, selling, renting or investing — our team is ready to help. Reach out today and get a free consultation.</p>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div>
+          <div class="contact-item-label">Phone</div>
+          <div class="contact-item-value">+234 800 000 0000</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📧</div>
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-value">info@prestigeproperties.ng</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div>
+          <div class="contact-item-label">Office</div>
+          <div class="contact-item-value">Victoria Island, Lagos & Wuse 2, Abuja</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">💬</div>
+        <div>
+          <div class="contact-item-label">WhatsApp</div>
+          <div class="contact-item-value">+234 800 000 0000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-right">
+    <h3>Send Us a Message</h3>
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input class="form-input" type="text" placeholder="Your full name">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone Number</label>
+      <input class="form-input" type="tel" placeholder="Your WhatsApp number">
+    </div>
+    <div class="form-group">
+      <label class="form-label">I Am Interested In</label>
+      <select class="form-select">
+        <option>Buying a Property</option>
+        <option>Renting a Property</option>
+        <option>Selling My Property</option>
+        <option>Land Investment</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <input class="form-input" type="text" placeholder="Tell us what you're looking for...">
+    </div>
+    <button class="submit-btn">Send Message →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Prestige<span>.</span>Properties</div>
+      <p class="footer-desc">Nigeria's most trusted real estate agency. Helping Nigerians find, buy, sell and rent properties since 2016.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Properties</div>
+      <ul class="footer-links">
+        <li><a href="#">For Sale</a></li>
+        <li><a href="#">For Rent</a></li>
+        <li><a href="#">Land</a></li>
+        <li><a href="#">Commercial</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Locations</div>
+      <ul class="footer-links">
+        <li><a href="#">Lagos</a></li>
+        <li><a href="#">Abuja</a></li>
+        <li><a href="#">Port Harcourt</a></li>
+        <li><a href="#">Ibadan</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Team</a></li>
+        <li><a href="#">Testimonials</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2024 Prestige Properties. Built by <span>ICON MUSIC</span></div>
+    <div class="footer-copy">Lagos · Abuja · Port Harcourt</div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.property-card, .why-item, .testimonial-card, .contact-left, .contact-right, .hero-stat').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
